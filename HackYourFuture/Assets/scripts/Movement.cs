@@ -8,8 +8,11 @@ public class Movement : MonoBehaviour
 
     public float speed = 6f;
 
-    public float sensX;
-    public float sensY;
+    float sensX;
+    float sensY;
+
+    float xRotation;
+    float yRotation;
 
     // Start is called before the first frame update
     void Start()
@@ -20,13 +23,15 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
+        //transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
 
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
+        float horizontal = Input.GetAxisRaw("Horizontal") * sensX;
+        float vertical = Input.GetAxisRaw("Vertical") * sensY;
 
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+
+        yRotation += horizontal;
+        xRotation -= vertical;
 
         if (direction.magnitude >= 0.1f)
         {
